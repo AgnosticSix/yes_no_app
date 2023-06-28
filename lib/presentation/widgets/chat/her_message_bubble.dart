@@ -25,17 +25,39 @@ class HerMessageBubble extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-
-        //_ImageBubble()
+        _ImageBubble(),
+        const SizedBox(
+          height: 10,
+        ),
       ],
     );
   }
 }
 
-
 class _ImageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final size = MediaQuery.of(context).size;
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.network(
+          'https://yesno.wtf/assets/no/17-829284e9dd894ce9fb65fbe86d2e382c.gif',
+          width: size.width * 0.7,
+          height: 150,
+          fit: BoxFit.fill,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+
+            return Container(
+              width: size.width * 0.7,
+              height: 150,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+
+              child: const Text('Mi amor está enviando una imagen'),
+
+              //CircularProgressIndicator(value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null),
+            );
+          },
+        ));
   }
 }
